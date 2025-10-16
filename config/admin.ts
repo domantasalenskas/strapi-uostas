@@ -3,7 +3,6 @@ export default ({ env }) => ({
     secret: env('ADMIN_JWT_SECRET'),
     options: {
       expiresIn: '7d',
-      tokenType: 'Bearer',
     },
   },
   apiToken: {
