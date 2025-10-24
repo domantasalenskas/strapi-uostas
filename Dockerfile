@@ -51,6 +51,12 @@ RUN npm install --only=production && \
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/public ./public
 
+# Copy TypeScript configuration (needed for runtime)
+COPY --from=build /app/tsconfig.json ./tsconfig.json
+
+# Copy source files (needed for Strapi runtime)
+COPY --from=build /app/src ./src
+
 # Copy database directory for migrations
 COPY --from=build /app/database ./database
 
