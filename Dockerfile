@@ -21,18 +21,15 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production && \
+# Install ALL dependencies (including dev dependencies needed for build)
+RUN npm ci && \
     npm cache clean --force
 
 # Copy source code
 COPY . .
 
-# Set NODE_ENV to production
-ENV NODE_ENV=production
-
-# Build the admin panel
-RUN npm run build
+# Build the admin panel (requires dev dependencies)
+RUN NODE_ENV=production npm run build
 
 # Stage 2: Production stage
 FROM node:22-alpine AS production
@@ -44,14 +41,17 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-# Copy node_modules from build stage
-COPY --from=build /app/node_modules ./node_modules
+# Copy package files
+COPY --from=build /app/package*.json ./
+
+# Install ONLY production dependencies
+RUN npm ci --only=production && \
+    npm cache clean --force
 
 # Copy built application from build stage
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/build ./build
 COPY --from=build /app/public ./public
-COPY --from=build /app/package*.json ./
 
 # Copy configuration and source files
 COPY --from=build /app/config ./config
