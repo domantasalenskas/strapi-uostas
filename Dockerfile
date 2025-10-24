@@ -16,10 +16,12 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json ./
 
 # Install ALL dependencies (including dev dependencies needed for build)
-RUN npm ci
+# Use npm install instead of npm ci to avoid lockfile platform issues
+RUN npm install && \
+    npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -38,10 +40,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy package files
-COPY --from=build /app/package*.json ./
+COPY --from=build /app/package.json ./
 
 # Install ONLY production dependencies
-RUN npm ci --only=production && \
+RUN npm install --only=production && \
     npm cache clean --force
 
 # Copy built application from build stage
