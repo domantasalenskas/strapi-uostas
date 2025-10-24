@@ -1,0 +1,84 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.cache/
+
+# Development files
+.git/
+.gitignore
+.env
+.env.local
+.env.*.local
+.env.test
+.env.development
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-*
+.project
+.settings/
+
+# Strapi
+.strapi/
+.tmp/
+database/*.db
+database/*.db-shm
+database/*.db-wal
+
+# Docker files (we don't need these inside the image)
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Testing
+coverage/
+.nyc_output/
+*.test.js
+*.spec.js
+__tests__/
+__mocks__/
+
+# Misc
+.editorconfig
+.eslintrc*
+.prettierrc*
+.eslintignore
+.prettierignore
+
