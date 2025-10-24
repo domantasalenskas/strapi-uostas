@@ -52,7 +52,7 @@ desktop.ini
 
 # Strapi
 .strapi/
-.tmp/
+# .tmp/ - NOT ignored so we can include the SQLite database in Docker image
 database/*.db
 database/*.db-shm
 database/*.db-wal

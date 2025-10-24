@@ -64,11 +64,16 @@ COPY --from=build /app/database ./database
 COPY --from=build /app/favicon.png ./favicon.png
 COPY --from=build /app/favicon.png ./favicon.ico
 
-# Create a non-root user for security
+# Create a non-root user for security and set up directories
 RUN groupadd -g 1001 nodejs && \
     useradd -u 1001 -g nodejs -s /bin/bash -m strapi && \
-    mkdir -p /app/.tmp && \
-    chown -R strapi:nodejs /app
+    mkdir -p /app/.tmp
+
+# Copy pre-populated SQLite database (with admin user and permissions)
+COPY --from=build /app/.tmp/data.db /app/.tmp/data.db
+
+# Set proper ownership
+RUN chown -R strapi:nodejs /app
 
 USER strapi
 
