@@ -51,10 +51,8 @@ RUN npm install --only=production && \
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/public ./public
 
-# Copy configuration and source files
-COPY --from=build /app/config ./config
+# Copy database directory for migrations
 COPY --from=build /app/database ./database
-COPY --from=build /app/src ./src
 
 # Create a non-root user for security
 RUN groupadd -g 1001 nodejs && \
