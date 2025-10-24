@@ -54,11 +54,15 @@ COPY --from=build /app/public ./public
 # Copy TypeScript configuration (needed for runtime)
 COPY --from=build /app/tsconfig.json ./tsconfig.json
 
-# Copy source files (needed for Strapi runtime)
+# Copy source files (needed for Strapi runtime - API routes, controllers, services)
 COPY --from=build /app/src ./src
 
 # Copy database directory for migrations
 COPY --from=build /app/database ./database
+
+# Copy favicon (both formats)
+COPY --from=build /app/favicon.png ./favicon.png
+COPY --from=build /app/favicon.png ./favicon.ico
 
 # Create a non-root user for security
 RUN groupadd -g 1001 nodejs && \
