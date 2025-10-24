@@ -59,12 +59,24 @@ COPY --from=build /app/src ./src
 # Create a non-root user for security
 RUN groupadd -g 1001 nodejs && \
     useradd -u 1001 -g nodejs -s /bin/bash -m strapi && \
+    mkdir -p /app/.tmp && \
     chown -R strapi:nodejs /app
 
 USER strapi
 
 # Set environment variables
-ENV NODE_ENV=production
+ENV NODE_ENV=production \
+    HOST=0.0.0.0 \
+    PORT=1337 \
+    APP_KEYS=hmCRNfUnc5TAvQ/juPNkcA==,AN9/Aqp+OmvdGQeCUW1Tlg==,tAAmL0IP5ymARPfIsltVLA==,/1JClk5Xn12PacrgY2cFXQ== \
+    API_TOKEN_SALT=72Ysx38swPxrPU4vEgvJbg== \
+    ADMIN_JWT_SECRET=Tf8OG3IAN6bCc07nbEHcmA== \
+    TRANSFER_TOKEN_SALT=Y3I2GJBWcCkZRCJ0CUw6SQ== \
+    ENCRYPTION_KEY=tR5Ffuqul6hbMA9VYyT0Og== \
+    JWT_SECRET=DMHrvSkiduVXM6Yl3kF7vA== \
+    DATABASE_CLIENT=sqlite \
+    DATABASE_FILENAME=.tmp/data.db \
+    DATABASE_SSL=false
 
 # Expose the port that Sevalla expects
 EXPOSE 8080
