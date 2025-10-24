@@ -47,17 +47,14 @@ RUN npm install --only=production && \
     npm cache clean --force
 
 # Copy built application from build stage
+# Strapi v5 builds admin panel into dist/ directory
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/build ./build
 COPY --from=build /app/public ./public
 
 # Copy configuration and source files
 COPY --from=build /app/config ./config
 COPY --from=build /app/database ./database
 COPY --from=build /app/src ./src
-
-# Copy favicon if it exists
-COPY --from=build /app/favicon.png* ./
 
 # Create a non-root user for security
 RUN groupadd -g 1001 nodejs && \
