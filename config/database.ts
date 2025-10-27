@@ -6,7 +6,7 @@ export default ({ env }) => {
   const connections = {
     mysql: {
       connection: {
-        connectionString: env('DATABASE_URL'),
+        socketPath: env('DATABASE_SOCKET'),
         host: env('DATABASE_HOST', 'localhost'),
         port: env.int('DATABASE_PORT', 3306),
         database: env('DATABASE_NAME', 'strapi'),
